@@ -16,23 +16,23 @@ import data from "../data/index";
 
 function Test({ endQuiz }) {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(data.questionData.questions.at(questionIndex));
+  const [currentQuestion, setCurrentQuestion] = useState(
+    data.questionData.questions2.at(questionIndex)
+  );
   const [userSlectedAns, setUserSlectedAns] = useState(null);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState([]);
   const [timeTaken, setTimeTaken] = useState(null);
   const time =
-    (data.questionData.time.hours * 3600) +
-    (data.questionData.time.minutes * 60) +
+    data.questionData.time.hours * 3600 +
+    data.questionData.time.minutes * 60 +
     data.questionData.time.seconds;
 
   const handleItemClick = (e, { name }) => {
     setUserSlectedAns(name);
 
     let point = 0;
-    let correctAnswer = currentQuestion.options.filter(
-      (option) => option.isTrue === true
-    );
-    if (correctAnswer[0].answer === name) point = data.questionData.point;
+    let correctAnswer = currentQuestion.correct;
+    if (correctAnswer === name) point = data.questionData.point;
 
     const qna = questionsAndAnswers;
     const index = questionsAndAnswers.findIndex(
@@ -44,16 +44,18 @@ function Test({ endQuiz }) {
       qna.push({
         question: currentQuestion.q,
         user_answer: name,
-        correct_answer: correctAnswer[0].answer,
+        correct_answer: correctAnswer,
         id: currentQuestion.id,
         point,
       });
     } else {
-      const current = questionsAndAnswers.find((q) => q.id === currentQuestion.id);
+      const current = questionsAndAnswers.find(
+        (q) => q.id === currentQuestion.id
+      );
 
       current.user_answer = name;
 
-      if (correctAnswer[0].answer === name) {
+      if (correctAnswer === name) {
         current.point = data.questionData.point;
       } else {
         current.point = 0;
@@ -67,20 +69,24 @@ function Test({ endQuiz }) {
 
   const handlePrev = () => {
     setQuestionIndex(questionIndex - 1);
-    setCurrentQuestion(data.questionData.questions.at(questionIndex - 1));
+    setCurrentQuestion(data.questionData.questions2.at(questionIndex - 1));
 
-    const current = questionsAndAnswers.find((q) => q.id === currentQuestion.id - 1);
+    const current = questionsAndAnswers.find(
+      (q) => q.id === currentQuestion.id - 1
+    );
 
     if (current) setUserSlectedAns(current.user_answer);
   };
 
   const handleNext = (e, { name }) => {
     setUserSlectedAns(name);
-    const next = questionsAndAnswers.find(q => q.id === currentQuestion.id + 1);
+    const next = questionsAndAnswers.find(
+      (q) => q.id === currentQuestion.id + 1
+    );
     if (next) setUserSlectedAns(next.user_answer);
 
     setQuestionIndex(questionIndex + 1);
-    setCurrentQuestion(data.questionData.questions.at(questionIndex + 1));
+    setCurrentQuestion(data.questionData.questions2.at(questionIndex + 1));
     if (!next) setUserSlectedAns(null);
   };
 
@@ -93,17 +99,16 @@ function Test({ endQuiz }) {
 
     if (points.length > 1) {
       correctAnswers = points.reduce((acc, value) => {
-        return acc + value
+        return acc + value;
       });
-    } else if(points.length === 1) {
-      correctAnswers = data.questionData.point
-    }
-    else {
+    } else if (points.length === 1) {
+      correctAnswers = data.questionData.point;
+    } else {
       correctAnswers = 0;
     }
 
     endQuiz({
-      totalQuestions: data.questionData.questions.length,
+      totalQuestions: data.questionData.questions2.length,
       correctAnswers: correctAnswers / data.questionData.point,
       timeTaken,
       questionsAndAnswers,
@@ -118,12 +123,11 @@ function Test({ endQuiz }) {
 
     if (points.length > 1) {
       correctAnswers = points.reduce((acc, value) => {
-        return acc + value
+        return acc + value;
       });
-    } else if(points.length === 1) {
-      correctAnswers = data.questionData.point
-    }
-    else {
+    } else if (points.length === 1) {
+      correctAnswers = data.questionData.point;
+    } else {
       correctAnswers = 0;
     }
 
@@ -145,7 +149,9 @@ function Test({ endQuiz }) {
                   <Header as="h1" block floated="left">
                     <Icon name="info circle" />
                     <Header.Content>
-                      {`Question No.${questionIndex + 1} of ${data.questionData.questions.length}`}
+                      {`Question No.${questionIndex + 1} of ${
+                        data.questionData.questions2.length
+                      }`}
                     </Header.Content>
                   </Header>
                   <Countdown
@@ -165,19 +171,38 @@ function Test({ endQuiz }) {
                   </Item.Description>
                   <Divider />
                   <Menu vertical fluid size="massive">
-                    {currentQuestion.options.map((option, i) => {
-                      return (
-                        <Menu.Item
-                          key={i}
-                          name={option.answer}
-                          active={userSlectedAns === option.answer}
-                          onClick={handleItemClick}
-                        >
-                          <b style={{ marginRight: "8px" }}>{option.letter}</b>
-                          {option.answer}
-                        </Menu.Item>
-                      );
-                    })}
+                    <Menu.Item
+                      name={currentQuestion.A}
+                      active={userSlectedAns === currentQuestion.A}
+                      onClick={handleItemClick}
+                    >
+                      <b style={{ marginRight: "8px" }}>A</b>
+                      {currentQuestion.A}
+                    </Menu.Item>
+                    <Menu.Item
+                      name={currentQuestion.B}
+                      active={userSlectedAns === currentQuestion.B}
+                      onClick={handleItemClick}
+                    >
+                      <b style={{ marginRight: "8px" }}>B</b>
+                      {currentQuestion.B}
+                    </Menu.Item>
+                    <Menu.Item
+                      name={currentQuestion.C}
+                      active={userSlectedAns === currentQuestion.C}
+                      onClick={handleItemClick}
+                    >
+                      <b style={{ marginRight: "8px" }}>C</b>
+                      {currentQuestion.C}
+                    </Menu.Item>
+                    <Menu.Item
+                      name={currentQuestion.D}
+                      active={userSlectedAns === currentQuestion.D}
+                      onClick={handleItemClick}
+                    >
+                      <b style={{ marginRight: "8px" }}>D</b>
+                      {currentQuestion.D}
+                    </Menu.Item>
                   </Menu>
                 </Item.Meta>
                 <Divider />
@@ -202,7 +227,7 @@ function Test({ endQuiz }) {
                     icon="right chevron"
                     labelPosition="right"
                     disabled={
-                      questionIndex === data.questionData.questions.length - 1
+                      questionIndex === data.questionData.questions2.length - 1
                     }
                   />
                 </Item.Extra>

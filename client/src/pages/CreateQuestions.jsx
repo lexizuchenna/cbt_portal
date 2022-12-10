@@ -16,44 +16,40 @@ import { COUNTDOWN_TIME } from "../constants";
 
 function CreateQuestions() {
   const [error, setError] = useState(null);
-  const [questionId, setQuestionId] = useState(0);
-  const [questions, setQuestions] = useState({});
-
+  const [point, setPoint] = useState(0)
   // const [offline, setOffline] = useState(false);
+  const [form, setForm] = useState([]);
   const [countdownTime, setCountdownTime] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  // const [data, setData] = useState({time: countdownTime, questions2: form, point});
 
-  const [form, setForm] = useState([]);
-  const [opt, setOpt] = useState([]);
+
+  const handleSetPoint = (e) => {
+    setPoint(e.target.value)
+    // setData({...data}, point)
+  }
 
   const handleTimeChange = (e, { name, value }) => {
     setCountdownTime({ ...countdownTime, [name]: value });
-  };
+    // setData({...data}, {time: countdownTime})
 
-  const opts = ["A", "B", "C", "D"];
+  };
 
   const handleAddData = (e) => {
     e.preventDefault();
     const inputState = {
       question: "",
-      options: [],
+      A: "",
+      B: "",
+      C: "",
+      D: "",
+      correct: "",
+      id: 0,
     };
     setForm((prev) => [...prev, inputState]);
-  };
-
-  const addOpt = () => {
-    const initialState = {
-      letter: "",
-      answer: "",
-      isTrue: false,
-    };
-
-    setOpt((prev) => [...prev, initialState]);
-    opt.filter((item) => item.letter !== "");
-    console.log(opt.filter((item) => item.letter !== ""));
   };
 
   const handleRemove = (index, e) => {
@@ -70,29 +66,25 @@ function CreateQuestions() {
       return prev.map((item, i) => {
         if (i !== index) return item;
         console.log(item);
-        item.options.map((op, ind) => {
-          console.log(`${op}: ${ind}`);
-        });
         return {
           ...item,
+          id: i + 1,
           [e.target.name]: e.target.value,
-          options: opt.filter((item) => item.letter !== ""),
         };
       });
     });
-  };
-  const onOptChange = (e, index) => {
-    e.preventDefault();
-    e.persist();
-    let opt = e.target.placeholder.slice(-1);
-    console.log(opt);
 
-    let options = [
-      { letter: "A", answer: "", isTrue: false },
-      { letter: "B", answer: "", isTrue: false },
-      { letter: "C", answer: "", isTrue: false },
-      { letter: "D", answer: "", isTrue: false },
-    ];
+    // setData({...data}, {questions2: form})
+  };
+
+  const fetchData = () => {
+   let data = {}
+   data = {
+     time: countdownTime,
+     question2: form,
+     point
+   }
+    console.log(data);
   };
 
   return (
@@ -115,7 +107,7 @@ function CreateQuestions() {
                 <Form>
                   <Form.Field required>
                     <label>Point</label>
-                    <input placeholder="Enter Point Per Question" />
+                    <input placeholder="Enter Point Per Question" onChange={handleSetPoint} type='number' />
                   </Form.Field>
                 </Form>
                 <br />
@@ -176,8 +168,8 @@ function CreateQuestions() {
                               placeholder="Enter Option A"
                               key={index}
                               fluid
-                              name="answer"
-                              onChange={(e) => onOptChange(e)}
+                              name="A"
+                              onChange={(e) => onChange(index, e)}
                             />
                           </Form.Field>
                           <Form.Field>
@@ -186,8 +178,8 @@ function CreateQuestions() {
                               placeholder="Enter Option B"
                               key={index}
                               fluid
-                              name="answer"
-                              onChange={(e) => onOptChange(e)}
+                              name="B"
+                              onChange={(e) => onChange(index, e)}
                             />
                           </Form.Field>
                         </Form.Group>
@@ -199,8 +191,8 @@ function CreateQuestions() {
                               placeholder="Enter Option C"
                               key={index}
                               fluid
-                              name="answer"
-                              onChange={(e) => onOptChange(e)}
+                              name="C"
+                              onChange={(e) => onChange(index, e)}
                             />
                           </Form.Field>
                           <Form.Field>
@@ -209,8 +201,8 @@ function CreateQuestions() {
                               placeholder="Enter Option D"
                               key={index}
                               fluid
-                              name="answer"
-                              onChange={(e) => onOptChange(e)}
+                              name="D"
+                              onChange={(e) => onChange(index, e)}
                             />
                           </Form.Field>
                         </Form.Group>
@@ -218,14 +210,15 @@ function CreateQuestions() {
                           <Input
                             label="Correct Answer"
                             placeholder="Enter Correct Answer"
+                            key={index}
                             fluid
-                            name="correct_answer"
+                            name="correct"
+                            onChange={(e) => onChange(index, e)}
                           />
                         </Form.Field>
                       </Card>
                     </Card.Group>
                     <Button
-                      // primary
                       size="small"
                       icon="minus"
                       labelPosition="right"
@@ -233,7 +226,6 @@ function CreateQuestions() {
                       className="mt-2"
                       color="red"
                       onClick={(e) => handleRemove(index, e)}
-                      // disabled={!allFieldsSelected || processing}
                     />
                     <Divider />
                   </>
@@ -246,20 +238,21 @@ function CreateQuestions() {
                   content="Add"
                   className="mt-2"
                   onClick={handleAddData}
-                  // disabled={!allFieldsSelected || processing}
                 />
               </Form>
               <Divider />
               <Item.Extra>
-                {/* <Button
+                <Button
                   primary
                   size="big"
-                  icon="play"
+                  icon="cloud"
                   labelPosition="left"
                   // content={processing ? 'Processing...' : 'Play Now'}
-                  // onClick={fetchData}
+                  content={"Submit"}
+                  onClick={fetchData}
+                  fluid
                   // disabled={!allFieldsSelected || processing}
-                /> */}
+                />
               </Item.Extra>
             </Item.Content>
           </Item>

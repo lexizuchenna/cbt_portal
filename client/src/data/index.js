@@ -45,7 +45,11 @@ const questions = [
     options: [
       { letter: "A", answer: "Hyper Text Markup Language", isTrue: true },
       { letter: "B", answer: "Hyper Transforming Media Log", isTrue: false },
-      { letter: "C", answer: "High Translative Machine Language", isTrue: false },
+      {
+        letter: "C",
+        answer: "High Translative Machine Language",
+        isTrue: false,
+      },
       { letter: "D", answer: "None of the above", isTrue: false },
     ],
   },
@@ -60,6 +64,68 @@ const questions = [
     ],
   },
 ];
+const questions2 = [
+  {
+    q: "What is your name",
+    id: 1,
+
+    A: "1984",
+    B: "The old man and the sea",
+    C: "The catcher and the rye",
+    D: "To kill a mockingbird",
+    correct: "The catcher and the rye",
+  },
+  {
+    q: "What is your class",
+    id: 2,
+
+    A: "Grade 3",
+    B: "Grade 4",
+    C: "Grade 5",
+    D: "Grade 6",
+    correct: "Grade 4",
+  },
+  {
+    q: "Are you mad?",
+    id: 3,
+
+    A: "Maybe",
+    B: "No",
+    C: "Yes",
+    D: "Ok",
+    correct: 'No'
+  },
+  {
+    q: "Shey you go dey for me?",
+    id: 4,
+
+    A: "Go and get money",
+    B: "No",
+    C: "Yes",
+    D: "Ok",
+    correct: 'Go and get money'
+  },
+  {
+    q: "What is meaning of HTML",
+    id: 5,
+
+    A: "Hyper Text Markup Language",
+    B: "Hyper Transforming Media Log",
+    C: "High Translative Machine Language",
+    D: "None of the above",
+    correct: "Hyper Text Markup Language"
+  },
+  {
+    q: "HTML a programming language",
+    id: 6,
+
+    A: "True",
+    B: "False",
+    C: "All of the above",
+    D: "None of the above",
+    correct: 'False'
+  },
+];
 
 const questionData = {
   time: {
@@ -68,7 +134,7 @@ const questionData = {
     seconds: parseInt("30", 10),
   },
   point: 5,
-  questions,
+  questions2,
 };
 
 const data = {
