@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Container, Header, Icon } from "semantic-ui-react";
 
 import TestLogin from "../components/TestLogin";
@@ -8,6 +9,8 @@ import Result from "../components/Result/Result";
 import PreTest from "../components/PreTest";
 
 function Test() {
+  const location = useLocation()
+
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [countdownTime, setCountdownTime] = useState(null);
@@ -36,6 +39,7 @@ function Test() {
       setLoading(false);
     }, 2000);
   };
+  
   if(!isQuizStarted && !isLoggedIn) return <TestLogin />;
 
   if(!isQuizStarted && !isQuizCompleted && isLoggedIn) return <PreTest setIsQuizStarted={setIsQuizStarted} />;

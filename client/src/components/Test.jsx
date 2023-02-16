@@ -63,8 +63,6 @@ function Test({ endQuiz }) {
     }
 
     setQuestionsAndAnswers(qna);
-
-    console.log(questionsAndAnswers);
   };
 
   const handlePrev = () => {
@@ -79,6 +77,7 @@ function Test({ endQuiz }) {
   };
 
   const handleNext = (e, { name }) => {
+    name = name ? name : "unanswered";
     setUserSlectedAns(name);
     const next = questionsAndAnswers.find(
       (q) => q.id === currentQuestion.id + 1
@@ -107,6 +106,11 @@ function Test({ endQuiz }) {
       correctAnswers = 0;
     }
 
+    const shit = data.questionData.questions2.map((q) => {
+      
+    })
+    console.log()
+
     endQuiz({
       totalQuestions: data.questionData.questions2.length,
       correctAnswers: correctAnswers / data.questionData.point,
@@ -132,7 +136,7 @@ function Test({ endQuiz }) {
     }
 
     return endQuiz({
-      totalQuestions: data.questionData.questions.length,
+      totalQuestions: data.questionData.questions2.length,
       correctAnswers: correctAnswers / data.questionData.point,
       timeTaken,
       questionsAndAnswers,

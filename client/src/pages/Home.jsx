@@ -16,7 +16,9 @@ function Home() {
           description="This is test on Phonics for Grade 3 and Grade 4"
         />
         <Card
-          href="#card-example-link-card"
+          href="https://www.sabishare.com/file/uSorxsJWf68-no-image-icon-lexixtech-jpg"
+          download
+          target='_blank'
           header="Test Title"
           meta="Subject"
           description="This is test on Phonics for Grade 3 and Grade 4"
