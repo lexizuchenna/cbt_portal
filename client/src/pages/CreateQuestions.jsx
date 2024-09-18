@@ -12,30 +12,26 @@ import {
   Card,
 } from "semantic-ui-react";
 
+import Offline from "../components/Errors/Offline";
 import { COUNTDOWN_TIME } from "../constants";
 
 function CreateQuestions() {
   const [error, setError] = useState(null);
-  const [point, setPoint] = useState(0)
-  // const [offline, setOffline] = useState(false);
+  const [point, setPoint] = useState(0);
+  const [offline, setOffline] = useState(false);
   const [form, setForm] = useState([]);
   const [countdownTime, setCountdownTime] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
-  // const [data, setData] = useState({time: countdownTime, questions2: form, point});
-
 
   const handleSetPoint = (e) => {
-    setPoint(e.target.value)
-    // setData({...data}, point)
-  }
+    setPoint(e.target.value);
+  };
 
   const handleTimeChange = (e, { name, value }) => {
     setCountdownTime({ ...countdownTime, [name]: value });
-    // setData({...data}, {time: countdownTime})
-
   };
 
   const handleAddData = (e) => {
@@ -65,7 +61,6 @@ function CreateQuestions() {
     setForm((prev) => {
       return prev.map((item, i) => {
         if (i !== index) return item;
-        console.log(item);
         return {
           ...item,
           id: i + 1,
@@ -73,18 +68,34 @@ function CreateQuestions() {
         };
       });
     });
-
-    // setData({...data}, {questions2: form})
   };
 
   const fetchData = () => {
-   let data = {}
-   data = {
-     time: countdownTime,
-     question2: form,
-     point
-   }
-    console.log(data);
+    let data = {};
+    data = {
+      time: countdownTime,
+      question2: form.filter((data) => data.id !== 0),
+      point,
+    };
+  };
+
+  let questionError =
+    form.length <= 0 ||
+    parseInt(point) === 0 ||
+    parseInt(point) < 0 ||
+    point === "" ||
+    (countdownTime.hours === 0 &&
+      countdownTime.minutes === 0 &&
+      countdownTime.seconds === 0);
+
+  window.onload = () => {
+    if (navigator.onLine) {
+      setOffline(true);
+    } else {
+      return <Offline />;
+    }
+    console.log(navigator.onLine);
+    console.log("navigator.onLine");
   };
 
   return (
@@ -107,7 +118,11 @@ function CreateQuestions() {
                 <Form>
                   <Form.Field required>
                     <label>Point</label>
-                    <input placeholder="Enter Point Per Question" onChange={handleSetPoint} type='number' />
+                    <input
+                      placeholder="Enter Point Per Question"
+                      onChange={handleSetPoint}
+                      type="number"
+                    />
                   </Form.Field>
                 </Form>
                 <br />
@@ -122,7 +137,6 @@ function CreateQuestions() {
                   value={countdownTime.hours}
                   onChange={handleTimeChange}
                   labeled
-                  // disabled={processing}
                 />
                 <Dropdown
                   search
@@ -133,7 +147,6 @@ function CreateQuestions() {
                   options={COUNTDOWN_TIME.minutes}
                   value={countdownTime.minutes}
                   onChange={handleTimeChange}
-                  // disabled={processing}
                 />
                 <Dropdown
                   search
@@ -144,7 +157,6 @@ function CreateQuestions() {
                   options={COUNTDOWN_TIME.seconds}
                   value={countdownTime.seconds}
                   onChange={handleTimeChange}
-                  // disabled={processing}
                 />
               </Item.Meta>
               <Divider />
@@ -152,7 +164,7 @@ function CreateQuestions() {
                 {JSON.stringify(form)}
                 {form.map((item, index) => (
                   <>
-                    <Card.Group key={index}>
+                    <Card.Group key={index + 1}>
                       <Card fluid color="red" className="p1">
                         <Form.TextArea
                           label="Question"
@@ -248,10 +260,10 @@ function CreateQuestions() {
                   icon="cloud"
                   labelPosition="left"
                   // content={processing ? 'Processing...' : 'Play Now'}
-                  content={"Submit"}
+                  content="Upload"
                   onClick={fetchData}
                   fluid
-                  // disabled={!allFieldsSelected || processing}
+                  disabled={questionError}
                 />
               </Item.Extra>
             </Item.Content>

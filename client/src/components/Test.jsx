@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Container,
   Segment,
@@ -28,6 +28,7 @@ function Test({ endQuiz }) {
     data.questionData.time.seconds;
 
   const handleItemClick = (e, { name }) => {
+    console.log(name);
     setUserSlectedAns(name);
 
     let point = 0;
@@ -63,8 +64,6 @@ function Test({ endQuiz }) {
     }
 
     setQuestionsAndAnswers(qna);
-
-    console.log(questionsAndAnswers);
   };
 
   const handlePrev = () => {
@@ -79,6 +78,7 @@ function Test({ endQuiz }) {
   };
 
   const handleNext = (e, { name }) => {
+    name = name ? name : "unanswered";
     setUserSlectedAns(name);
     const next = questionsAndAnswers.find(
       (q) => q.id === currentQuestion.id + 1
@@ -132,7 +132,7 @@ function Test({ endQuiz }) {
     }
 
     return endQuiz({
-      totalQuestions: data.questionData.questions.length,
+      totalQuestions: data.questionData.questions2.length,
       correctAnswers: correctAnswers / data.questionData.point,
       timeTaken,
       questionsAndAnswers,

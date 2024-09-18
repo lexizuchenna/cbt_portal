@@ -1,5 +1,8 @@
 const path = require("path");
 const reader = require("xlsx");
+const mongoose = require('mongoose')
+const Model = require('../models/Questions')
+const User = require('../models/User')
 
 const questions = [
   {
@@ -59,21 +62,24 @@ const questions = [
 ];
 
 module.exports = {
-  getHome: (req, res) => {
-    const file = reader.readFile(
-      path.join(__dirname, "../public/data/" + "file.xlsx")
-    );
+  getHome: async (req, res) => {
+    // const file = reader.readFile(
+    //   path.join(__dirname, "../public/data/" + "file.xlsx")
+    // );
 
-    const ws = reader.utils.json_to_sheet(questions);
+    // const ws = reader.utils.json_to_sheet(questions);
 
-    reader.utils.book_append_sheet(file, ws, "Sheet3");
+    // reader.utils.book_append_sheet(file, ws, "Sheet3");
 
-    // Writing to our file
+    // // Writing to our file
 
-    reader.writeFile(
-      file,
-      path.join(__dirname, "../public/data/" + "file.xlsx")
-    );
-    res.json(ws);
+    // reader.writeFile(
+    //   file,
+    //   path.join(__dirname, "../public/data/" + "file.xlsx")
+    // );
+    const data = await Model.find()
+    const data2 = await User.find()
+    const data3 = JSON.stringify(questions)
+    res.json(data3);
   },
 };

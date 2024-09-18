@@ -1,5 +1,5 @@
 import { Menu, Button } from "semantic-ui-react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -16,7 +16,7 @@ function Header() {
           content="Login"
           onClick=''
         /> */}
-        <Link to='/login'>Login to Quiz</Link>
+        {/* <Link to='/login'>Login to Quiz</Link> */}
       </Menu.Item>
     </Menu>
   );

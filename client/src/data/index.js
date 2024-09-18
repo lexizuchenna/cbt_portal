@@ -71,9 +71,9 @@ const questions2 = [
 
     A: "1984",
     B: "The old man and the sea",
-    C: "The catcher and the rye",
+    C: "Exam Portal",
     D: "To kill a mockingbird",
-    correct: "The catcher and the rye",
+    correct: "Exam Portal",
   },
   {
     q: "What is your class",
@@ -86,24 +86,24 @@ const questions2 = [
     correct: "Grade 4",
   },
   {
-    q: "Are you mad?",
+    q: "Choose No",
     id: 3,
 
     A: "Maybe",
     B: "No",
     C: "Yes",
     D: "Ok",
-    correct: 'No'
+    correct: "No",
   },
   {
-    q: "Shey you go dey for me?",
+    q: "Choose Yes",
     id: 4,
 
-    A: "Go and get money",
+    A: "Maybe",
     B: "No",
     C: "Yes",
     D: "Ok",
-    correct: 'Go and get money'
+    correct: "Yes",
   },
   {
     q: "What is meaning of HTML",
@@ -113,17 +113,17 @@ const questions2 = [
     B: "Hyper Transforming Media Log",
     C: "High Translative Machine Language",
     D: "None of the above",
-    correct: "Hyper Text Markup Language"
+    correct: "Hyper Text Markup Language",
   },
   {
-    q: "HTML a programming language",
+    q: "HTML is a programming language",
     id: 6,
 
     A: "True",
     B: "False",
     C: "All of the above",
     D: "None of the above",
-    correct: 'False'
+    correct: "False",
   },
 ];
 

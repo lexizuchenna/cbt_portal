@@ -20,7 +20,9 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/login" exact element={<Login />} />
-          <Route path="/cbt/test/:uid" exact element={<Test />} />
+          <Route path="/cbt/test/:uid/start" exact element={<Test />} />
+          <Route path="/cbt/test/:uid/" exact element={<Test />} />
+          <Route path="/cbt/test/:uid/end" exact element={<Test />} />
           <Route path="/create-questions" exact element={<CreateQuestions />} />
         </Routes>
       </Router>
