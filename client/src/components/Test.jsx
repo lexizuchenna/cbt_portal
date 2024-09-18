@@ -107,6 +107,11 @@ function Test({ endQuiz }) {
       correctAnswers = 0;
     }
 
+    const shit = data.questionData.questions2.map((q) => {
+      
+    })
+    console.log()
+
     endQuiz({
       totalQuestions: data.questionData.questions2.length,
       correctAnswers: correctAnswers / data.questionData.point,
